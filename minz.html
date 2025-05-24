@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      color: #333;
+      text-align: center;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Selamat datang di Minz!</h1>
+    <p>Untuk pengalaman terbaik, izinkan kami mengakses lokasi Anda.</p>
+    <button onclick="mintaLokasi()">Aktifkan Lokasi</button>
+    <p id="lokasi"></p>
+  </div>
+
+  <script>
+    function mintaLokasi() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(tampilkanLokasi, tampilkanError);
+      } else {
+        document.getElementById("lokasi").innerText = "Browser Anda tidak mendukung Geolocation.";
+      }
+    }
+
+    function tampilkanLokasi(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      document.getElementById("lokasi").innerText = `Lokasi Anda: Latitude: ${latitude}, Longitude: ${longitude}`;
+    }
+
+    function tampilkanError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          document.getElementById("lokasi").innerText = "Izin lokasi ditolak.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          document.getElementById("lokasi").innerText = "Informasi lokasi tidak tersedia.";
+          break;
+        case error.TIMEOUT:
+          document.getElementById("lokasi").innerText = "Permintaan lokasi timeout.";
+          break;
+        case error.UNKNOWN_ERROR:
+          document.getElementById("lokasi").innerText = "Terjadi kesalahan yang tidak diketahui.";
+          break;
+      }
+    }
+  </script>
+</body>
+</html>
